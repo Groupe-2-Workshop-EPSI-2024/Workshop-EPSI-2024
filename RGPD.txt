@@ -1,0 +1,43 @@
+1. Consentement explicite
+
+    Le consentement des patients doit être obtenu de manière claire et explicite avant de traiter leurs données personnelles de santé. Cela implique des informations sur la nature des données collectées et les finalités de leur utilisation.
+
+2. Finalités spécifiques
+
+    Les données de santé ne peuvent être collectées que pour des finalités précises, légitimes et clairement définies (par exemple, diagnostic, traitement, recherche).
+
+3. Minimisation des données
+
+    Seules les données nécessaires pour atteindre les finalités déclarées doivent être collectées et traitées. Éviter la collecte excessive d’informations.
+
+4. Durée de conservation
+
+    Les données de santé doivent être conservées uniquement aussi longtemps que nécessaire pour les finalités pour lesquelles elles ont été collectées. Des délais de conservation clairs doivent être définis.
+
+5. Droit d'accès et de rectification
+
+    Les patients ont le droit d'accéder à leurs données personnelles et de demander des corrections si des informations sont inexactes ou incomplètes.
+
+6. Droit à l’effacement (droit à l’oubli)
+
+    Les patients peuvent demander la suppression de leurs données personnelles sous certaines conditions, notamment lorsque les données ne sont plus nécessaires ou en cas de retrait du consentement.
+
+7. Sécurité des données
+
+    Des mesures techniques et organisationnelles appropriées doivent être mises en place pour garantir la sécurité des données, y compris la protection contre l'accès non autorisé et les violations de données.
+
+8. Transparence
+
+    Les patients doivent être informés de manière transparente sur le traitement de leurs données, y compris les droits dont ils disposent et comment ils peuvent les exercer.
+
+9. Transferts internationaux
+
+    Si les données de santé sont transférées en dehors de l'Union européenne, des garanties adéquates doivent être mises en place pour protéger ces données conformément au RGPD.
+
+10. Évaluation d'impact sur la protection des données (DPIA)
+
+    Pour certains traitements à haut risque, une évaluation d'impact sur la protection des données doit être réalisée pour identifier et atténuer les risques.
+
+11. Responsabilité et conformité
+
+    Les entités qui traitent des données de santé doivent être en mesure de démontrer leur conformité au RGPD, notamment par la tenue de registres des activités de traitement.
