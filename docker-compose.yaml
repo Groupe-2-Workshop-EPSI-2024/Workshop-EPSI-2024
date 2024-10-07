@@ -1,0 +1,54 @@
+services:
+  router:
+    image: frrouting/frr:latest
+    container_name: router
+    networks:
+      NETWORK_INTERCO_LAN:
+        ipv4_address: ${IP_ROUTEUR_LAN}
+      NETWORK_INTERCO_DMZ:
+        ipv4_address: ${IP_ROUTEUR_DMZ}
+      WAN:
+        ipv4_address: ${IP_ROUTEUR_WAN}
+    volumes:
+      - ./frr/config:/etc/frr
+    cap_add:
+      - NET_ADMIN
+
+    php-apache-environment:
+        container_name: php-apache
+        restart: always
+        build:
+            context: ./php
+            dockerfile: Dockerfile
+        depends_on:
+            - db
+        volumes:
+            - ./php/src:/var/www/html/
+        ports:
+            - 8000:80
+        networks:
+          NETWORK_DMZ:
+            ipv4_address: ${IP_SERVER_WEB}
+    db:
+        container_name: db
+        image: mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
+            MYSQL_USER: MYSQL_USER
+            MYSQL_PASSWORD: MYSQL_PASSWORD
+        ports:
+            - "9906:3306"
+        networks:
+          NETWORK_DMZ:
+            ipv4_address: ${IP_DATABASE}
+
+    phpmyadmin:
+        image: phpmyadmin
+        ports:
+            - '8080:80'
+        restart: always
+        environment:
+            PMA_HOST: db
+        depends_on:
+            - db
