@@ -14,6 +14,15 @@ services:
     cap_add:
       - NET_ADMIN
 
+    nginx:
+      image: nginx
+      ports:
+      - 8091:80
+      volumes:
+      - ./DevOps/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./DevOps/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./DevOps/nginx/logs/:/var/log/nginx
+
     php-apache-environment:
         container_name: php-apache
         restart: always
@@ -52,3 +61,8 @@ services:
             PMA_HOST: db
         depends_on:
             - db
+
+    angular:
+      build:
+      context: ./Web_AddicTrack
+      dockerfile: Dockerfile
