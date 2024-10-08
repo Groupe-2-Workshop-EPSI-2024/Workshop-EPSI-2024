@@ -1,0 +1,62 @@
+// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+nav {
+    width: 100%;
+    // background-color: #ffffff;
+    border-radius: 10px;
+    padding: 1px;
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-between;
+    // list-style: none;
+    // align-items: center;
+}
+
+ul {
+    display: flex;
+    align-items: center; /* center vertically */
+    list-style-type: none;
+    // removes dots
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    // removes original link look
+}
+
+a:hover {
+    color: #3C3C3C;
+}
+
+header {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.example-icon {
+    padding: 0 14px;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+
+
+/* Media query for screen size less than 600px */
+@media (max-width: 730px) {
+    nav ul {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        line-height: 35px;
+    }
+}
