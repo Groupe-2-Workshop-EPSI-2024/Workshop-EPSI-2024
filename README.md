@@ -16,3 +16,8 @@ docker compose down
 docker compose build
 docker compose up -d
 ```
+
+Migrate the database (with the variables in the .env file)
+```bash
+dotnet ef database update -p Back_AddicTrack --connection "server=localhost;port=3306;database=${MYSQL_DATABASE};user=${MYSQL_USER};password=${MYSQL_PASSWORD}"
+```
