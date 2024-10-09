@@ -1,19 +1,4 @@
 services:
-  router:
-    image: frrouting/frr:latest
-    container_name: router
-    networks:
-      NETWORK_INTERCO_LAN:
-        ipv4_address: ${IP_ROUTEUR_LAN}
-      NETWORK_INTERCO_DMZ:
-        ipv4_address: ${IP_ROUTEUR_DMZ}
-      WAN:
-        ipv4_address: ${IP_ROUTEUR_WAN}
-    volumes:
-      - ./frr/config:/etc/frr
-    cap_add:
-      - NET_ADMIN
-
     nginx:
       image: nginx
       ports:
