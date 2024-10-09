@@ -1,23 +1,25 @@
 services:
     nginx:
-      image: nginx
-      ports:
-      - 8091:80
-      volumes:
-      - ./DevOps/nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./DevOps/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./DevOps/nginx/logs/:/var/log/nginx
+        image: nginx
+        ports:
+            - 8091:80
+        volumes:
+            - ./DevOps/nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - ./DevOps/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./DevOps/nginx/logs/:/var/log/nginx
 
     db:
-        container_name: db
         image: mysql
-        restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
-            MYSQL_USER: MYSQL_USER
-            MYSQL_PASSWORD: MYSQL_PASSWORD
+            MYSQL_RANDOM_ROOT_PASSWORD: "Y"
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
         ports:
-            - "9906:3306"
+            - "${MYSQL_PORT}:3306"
+        volumes:
+            - db-data:/var/lib/mysql
+            
 
     phpmyadmin:
         image: phpmyadmin
@@ -34,4 +36,18 @@ services:
             context: ./Web_AddicTrack
             dockerfile: DockerFile
         ports:
-        - "4200:4200"
+            - "4200:4200"
+
+    api:
+        build:
+            context: ./Back_AddicTrack
+            dockerfile: Dockerfile
+        environment:
+            DefaultConnection: "server=db;port=${MYSQL_PORT};database=${MYSQL_DATABASE};user=${MYSQL_USER};password=${MYSQL_PASSWORD}"  
+        ports:
+            - "7293:8080"
+        depends_on:
+            - db
+
+volumes:
+    db-data:
