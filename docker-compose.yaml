@@ -33,4 +33,5 @@ services:
         build:
             context: ./Web_AddicTrack
             dockerfile: DockerFile
-
+        ports:
+        - "4200:4200"

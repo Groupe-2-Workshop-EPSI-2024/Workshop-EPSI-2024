@@ -1,4 +1,8 @@
+# info file
 *.pdf
 *.pptx
 *.log
+*.loo
+
+# secu
 .env
