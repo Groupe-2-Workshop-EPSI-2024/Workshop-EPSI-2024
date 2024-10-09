@@ -12,4 +12,14 @@ public abstract class User
     [Required] [StringLength(50)] public string FirstName { get; set; }
 
     [Required] [StringLength(50)] public string LastName { get; set; }
+
+    [Required]
+    [StringLength(320)]
+    [DataType(DataType.EmailAddress)]
+    public string Email { get; set; }
+
+    [Required]
+    [StringLength(15)]
+    [DataType(DataType.PhoneNumber)]
+    public string PhoneNumber { get; set; }
 }

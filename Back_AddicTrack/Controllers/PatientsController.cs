@@ -8,21 +8,14 @@ namespace Back_AddicTrack.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PatientsController : ControllerBase
+public class PatientsController(DataContext context) : ControllerBase
 {
-    private readonly DataContext _context;
-
-    public PatientsController(DataContext context)
-    {
-        _context = context;
-    }
-
     // GET: api/Patients
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PatientDTO>>> GetPatients()
     {
-        return await _context.Patients
-            .Select(e => PatientToDTO(e))
+        return await context.Patients
+            .Select(p => PatientDTO.FromPatient(p))
             .ToListAsync();
     }
 
@@ -30,11 +23,11 @@ public class PatientsController : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<PatientDTO>> GetPatient(Guid id)
     {
-        var patient = await _context.Patients.FindAsync(id);
+        var patient = await context.Patients.FindAsync(id);
 
         if (patient == null) return NotFound();
 
-        return PatientToDTO(patient);
+        return PatientDTO.FromPatient(patient);
     }
 
     // PUT: api/Patients/5
@@ -44,15 +37,21 @@ public class PatientsController : ControllerBase
     {
         if (id != patientDTO.Id) return BadRequest();
 
-        var patient = await _context.Patients.FindAsync(id);
+        var patient = await context.Patients.FindAsync(id);
         if (patient == null) return NotFound();
-
-        patient.FirstName = patientDTO.FirstName;
-        patient.LastName = patientDTO.LastName;
 
         try
         {
-            await _context.SaveChangesAsync();
+            patient.UpdateFromDTO(patientDTO);
+        }
+        catch (BadHttpRequestException e)
+        {
+            return BadRequest(e.Message);
+        }
+
+        try
+        {
+            await context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException) when (!PatientExists(id))
         {
@@ -67,46 +66,41 @@ public class PatientsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<PatientDTO>> PostPatient(PatientDTO patientDTO)
     {
-        var patient = new Patient
-        {
-            FirstName = patientDTO.FirstName,
-            LastName = patientDTO.LastName
-        };
+        var patient = new Patient();
 
-        _context.Patients.Add(patient);
-        await _context.SaveChangesAsync();
+        try
+        {
+            patient.UpdateFromDTO(patientDTO);
+        }
+        catch (BadHttpRequestException e)
+        {
+            return BadRequest(e.Message);
+        }
+
+        context.Patients.Add(patient);
+        await context.SaveChangesAsync();
 
         return CreatedAtAction(
             nameof(GetPatient),
             new { id = patient.Id },
-            PatientToDTO(patient));
+            PatientDTO.FromPatient(patient));
     }
 
     // DELETE: api/Patients/5
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeletePatient(Guid id)
     {
-        var patient = await _context.Patients.FindAsync(id);
+        var patient = await context.Patients.FindAsync(id);
         if (patient == null) return NotFound();
 
-        _context.Patients.Remove(patient);
-        await _context.SaveChangesAsync();
+        context.Patients.Remove(patient);
+        await context.SaveChangesAsync();
 
         return NoContent();
     }
 
     private bool PatientExists(Guid id)
     {
-        return _context.Patients.Any(e => e.Id == id);
-    }
-
-    private static PatientDTO PatientToDTO(Patient patient)
-    {
-        return new PatientDTO
-        {
-            Id = patient.Id,
-            FirstName = patient.FirstName,
-            LastName = patient.LastName
-        };
+        return context.Patients.Any(p => p.Id == id);
     }
 }

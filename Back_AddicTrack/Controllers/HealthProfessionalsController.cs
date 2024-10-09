@@ -15,7 +15,7 @@ public class HealthProfessionalsController(DataContext context) : ControllerBase
     public async Task<ActionResult<IEnumerable<HealthProfessionalDTO>>> GetHealthProfessionals()
     {
         return await context.HealthProfessionals
-            .Select(e => HealthProfessionalToDTO(e))
+            .Select(h => HealthProfessionalDTO.FromHealthProfessional(h))
             .ToListAsync();
     }
 
@@ -27,7 +27,21 @@ public class HealthProfessionalsController(DataContext context) : ControllerBase
 
         if (healthProfessional == null) return NotFound();
 
-        return HealthProfessionalToDTO(healthProfessional);
+        return HealthProfessionalDTO.FromHealthProfessional(healthProfessional);
+    }
+
+    // GET: api/HealthProfessionals/5/Patients
+    [HttpGet("{id:guid}/Patients")]
+    public async Task<ActionResult<IEnumerable<PatientDTO>>> GetHealthProfessionalPatients(Guid id)
+    {
+        if (!HealthProfessionalExists(id)) return NotFound();
+
+        return await context.Patients
+            .Where(p =>
+                p.Addictions.Any(a =>
+                    a.HealthProfessional.Id == id))
+            .Select(p => PatientDTO.FromPatient(p))
+            .ToListAsync();
     }
 
     // PUT: api/HealthProfessionals/5
@@ -40,8 +54,7 @@ public class HealthProfessionalsController(DataContext context) : ControllerBase
         var healthProfessional = await context.HealthProfessionals.FindAsync(id);
         if (healthProfessional == null) return NotFound();
 
-        healthProfessional.FirstName = healthProfessionalDTO.FirstName;
-        healthProfessional.LastName = healthProfessionalDTO.LastName;
+        healthProfessional.UpdateFromDTO(healthProfessionalDTO);
 
         try
         {
@@ -61,11 +74,9 @@ public class HealthProfessionalsController(DataContext context) : ControllerBase
     public async Task<ActionResult<HealthProfessionalDTO>> PostHealthProfessional(
         HealthProfessionalDTO healthProfessionalDTO)
     {
-        var healthProfessional = new HealthProfessional
-        {
-            FirstName = healthProfessionalDTO.FirstName,
-            LastName = healthProfessionalDTO.LastName
-        };
+        var healthProfessional = new HealthProfessional();
+
+        healthProfessional.UpdateFromDTO(healthProfessionalDTO);
 
         context.HealthProfessionals.Add(healthProfessional);
         await context.SaveChangesAsync();
@@ -73,7 +84,7 @@ public class HealthProfessionalsController(DataContext context) : ControllerBase
         return CreatedAtAction(
             nameof(GetHealthProfessional),
             new { id = healthProfessional.Id },
-            HealthProfessionalToDTO(healthProfessional));
+            HealthProfessionalDTO.FromHealthProfessional(healthProfessional));
     }
 
     // DELETE: api/HealthProfessionals/5
@@ -91,16 +102,6 @@ public class HealthProfessionalsController(DataContext context) : ControllerBase
 
     private bool HealthProfessionalExists(Guid id)
     {
-        return context.HealthProfessionals.Any(e => e.Id == id);
-    }
-
-    private static HealthProfessionalDTO HealthProfessionalToDTO(HealthProfessional healthProfessional)
-    {
-        return new HealthProfessionalDTO
-        {
-            Id = healthProfessional.Id,
-            FirstName = healthProfessional.FirstName,
-            LastName = healthProfessional.LastName
-        };
+        return context.HealthProfessionals.Any(h => h.Id == id);
     }
 }
