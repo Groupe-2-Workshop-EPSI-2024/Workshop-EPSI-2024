@@ -1,1 +1,56 @@
-<h1>Home - Dashboard</h1>
+<main>
+    <h1>Home - Dashboard 2024</h1>
+
+    <ul>
+        <li>
+            <h2>Appreciation of the journey</h2>
+            <div *ngIf="isBrowser">
+                <canvas baseChart width="400" height="400"
+                    [type]="'line'"
+                    [data]="lineChartData1"
+                    [options]="lineChartOptions1"
+                    [legend]="lineChartLegend1">
+                </canvas>
+            </div>              
+        </li>
+        <li>
+            <h2>Days sober</h2>
+            <div *ngIf="isBrowser">
+                <canvas baseChart
+                    [type]="'pie'"
+                    [datasets]="pieChartDatasets1"
+                    [labels]="pieChartLabels1"
+                    [options]="pieChartOptions1"
+                    [plugins]="pieChartPlugins1"
+                    [legend]="pieChartLegend1">
+                </canvas>
+            </div>              
+        </li>
+        <li>
+            <h2>Consumption</h2>
+            <div *ngIf="isBrowser">
+                <canvas baseChart
+                    [data]="barChartData"
+                    [options]="barChartOptions"
+                    [plugins]="barChartPlugins"
+                    [legend]="barChartLegend"
+                    [type]="'bar'">
+                </canvas>
+            </div>              
+        </li>
+        <li>
+            <h2>Triggers</h2>
+            <div *ngIf="isBrowser">
+                <canvas baseChart
+                    [type]="'pie'"
+                    [datasets]="pieChartDatasets2"
+                    [labels]="pieChartLabels2"
+                    [options]="pieChartOptions2"
+                    [plugins]="pieChartPlugins2"
+                    [legend]="pieChartLegend2">
+                </canvas>
+            </div>              
+        </li>
+    </ul>
+
+</main>
