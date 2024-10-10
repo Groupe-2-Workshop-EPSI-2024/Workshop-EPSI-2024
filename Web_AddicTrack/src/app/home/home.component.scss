@@ -1,0 +1,27 @@
+main {
+    padding: 50px;
+}
+
+ul {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    list-style-type: none;
+}
+
+li {
+    margin: 50px;
+    width: 25%;
+    border: 1px solid black;
+}
+
+div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+h2 {
+    margin: 5px;
+}
