@@ -19,14 +19,11 @@ public class Patient : User
                 out var birthDate))
             throw new BadHttpRequestException("Invalid date : " + patientDTO.BirthDate);
 
-        if (!Enum.TryParse(patientDTO.Gender, out Gender gender))
-            throw new BadHttpRequestException("Invalid gender : " + patientDTO.Gender);
-
         FirstName = patientDTO.FirstName;
         LastName = patientDTO.LastName;
         Email = patientDTO.Email;
         PhoneNumber = patientDTO.PhoneNumber;
         BirthDate = birthDate.ToDateTime(TimeOnly.MinValue);
-        Gender = gender;
+        Gender = patientDTO.Gender;
     }
 }

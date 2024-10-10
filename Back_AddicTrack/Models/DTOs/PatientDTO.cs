@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Back_AddicTrack.Models.Enums;
 
 namespace Back_AddicTrack.Models.DTOs;
 
@@ -6,7 +7,7 @@ public class PatientDTO : UserDTO
 {
     public string BirthDate { get; set; }
 
-    public string Gender { get; set; }
+    public Gender Gender { get; set; }
 
     public static PatientDTO FromPatient(Patient patient)
     {
@@ -18,7 +19,7 @@ public class PatientDTO : UserDTO
             Email = patient.Email,
             PhoneNumber = patient.PhoneNumber,
             BirthDate = DateOnly.FromDateTime(patient.BirthDate).ToString("O", CultureInfo.InvariantCulture),
-            Gender = patient.Gender.ToString()
+            Gender = patient.Gender
         };
     }
 }
