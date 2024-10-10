@@ -21,3 +21,8 @@ Migrate the database (with the variables in the .env file)
 ```bash
 dotnet ef database update -p Back_AddicTrack --connection "server=localhost;port=3306;database=${MYSQL_DATABASE};user=${MYSQL_USER};password=${MYSQL_PASSWORD}"
 ```
+
+The above commands needs to have .NET SDK 8.0 installed as well as dotnet-ef tool
+```bash
+dotnet tool install -g dotnet-ef
+```
