@@ -1,11 +1,11 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel.DataAnnotations;
 using Back_AddicTrack.Models.Enums;
 
 namespace Back_AddicTrack.Models.DTOs;
 
 public class PatientDTO : UserDTO
 {
-    public string BirthDate { get; set; }
+    [DataType(DataType.Date)] public DateTime BirthDate { get; set; }
 
     public Gender Gender { get; set; }
 
@@ -18,7 +18,7 @@ public class PatientDTO : UserDTO
             LastName = patient.LastName,
             Email = patient.Email,
             PhoneNumber = patient.PhoneNumber,
-            BirthDate = DateOnly.FromDateTime(patient.BirthDate).ToString("O", CultureInfo.InvariantCulture),
+            BirthDate = patient.BirthDate,
             Gender = patient.Gender
         };
     }

@@ -40,14 +40,7 @@ public class PatientsController(DataContext context) : ControllerBase
         var patient = await context.Patients.FindAsync(id);
         if (patient == null) return NotFound();
 
-        try
-        {
-            patient.UpdateFromDTO(patientDTO);
-        }
-        catch (BadHttpRequestException e)
-        {
-            return BadRequest(e.Message);
-        }
+        patient.UpdateFromDTO(patientDTO);
 
         try
         {
@@ -68,14 +61,7 @@ public class PatientsController(DataContext context) : ControllerBase
     {
         var patient = new Patient();
 
-        try
-        {
-            patient.UpdateFromDTO(patientDTO);
-        }
-        catch (BadHttpRequestException e)
-        {
-            return BadRequest(e.Message);
-        }
+        patient.UpdateFromDTO(patientDTO);
 
         context.Patients.Add(patient);
         await context.SaveChangesAsync();

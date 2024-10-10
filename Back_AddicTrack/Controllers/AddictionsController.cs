@@ -61,14 +61,7 @@ public class AddictionsController(DataContext context) : ControllerBase
         var healthProfessional = await context.HealthProfessionals.FindAsync(addictionDTO.HealthProfessionalId);
         if (healthProfessional == null) return NotFound();
 
-        try
-        {
-            addiction.UpdateFromDTO(addictionDTO, healthProfessional);
-        }
-        catch (BadHttpRequestException e)
-        {
-            return BadRequest(e.Message);
-        }
+        addiction.UpdateFromDTO(addictionDTO, healthProfessional);
 
         try
         {
@@ -95,14 +88,7 @@ public class AddictionsController(DataContext context) : ControllerBase
 
         var addiction = new Addiction();
 
-        try
-        {
-            addiction.UpdateFromDTO(addictionDTO, healthProfessional);
-        }
-        catch (BadHttpRequestException e)
-        {
-            return BadRequest(e.Message);
-        }
+        addiction.UpdateFromDTO(addictionDTO, healthProfessional);
 
         context.Addictions.Add(addiction);
         patient.Addictions.Add(addiction);

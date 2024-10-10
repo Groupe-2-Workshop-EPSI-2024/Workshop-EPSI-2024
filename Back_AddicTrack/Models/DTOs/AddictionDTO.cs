@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Back_AddicTrack.Models.DTOs;
 
@@ -6,9 +6,9 @@ public class AddictionDTO
 {
     public Guid Id { get; set; }
 
-    public string Name { get; set; }
+    [StringLength(50)] public string Name { get; set; }
 
-    public string SobrietyStartDateTime { get; set; }
+    [DataType(DataType.DateTime)] public DateTime SobrietyStartDateTime { get; set; }
 
     public Guid HealthProfessionalId { get; set; }
 
@@ -18,7 +18,7 @@ public class AddictionDTO
         {
             Id = addiction.Id,
             Name = addiction.Name,
-            SobrietyStartDateTime = addiction.SobrietyStartDateTime.ToString("O", CultureInfo.InvariantCulture),
+            SobrietyStartDateTime = addiction.SobrietyStartDateTime,
             HealthProfessionalId = addiction.HealthProfessional.Id
         };
     }

@@ -15,15 +15,11 @@ public class Patient : User
 
     public void UpdateFromDTO(PatientDTO patientDTO)
     {
-        if (!DateOnly.TryParseExact(patientDTO.BirthDate, "O", CultureInfo.InvariantCulture, DateTimeStyles.None,
-                out var birthDate))
-            throw new BadHttpRequestException("Invalid date : " + patientDTO.BirthDate);
-
         FirstName = patientDTO.FirstName;
         LastName = patientDTO.LastName;
         Email = patientDTO.Email;
         PhoneNumber = patientDTO.PhoneNumber;
-        BirthDate = birthDate.ToDateTime(TimeOnly.MinValue);
+        BirthDate = patientDTO.BirthDate;
         Gender = patientDTO.Gender;
     }
 }
