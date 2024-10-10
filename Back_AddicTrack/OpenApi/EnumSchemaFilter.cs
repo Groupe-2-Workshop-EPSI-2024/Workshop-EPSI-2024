@@ -1,8 +1,8 @@
-using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Back_AddicTrack.Swagger;
+namespace Back_AddicTrack.OpenApi;
 
 public class EnumSchemaFilter : ISchemaFilter
 {

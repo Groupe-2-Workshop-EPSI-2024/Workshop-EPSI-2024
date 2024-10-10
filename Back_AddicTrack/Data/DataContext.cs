@@ -3,13 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Back_AddicTrack.Data;
 
-public class DataContext : DbContext
+public class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
 {
-    public DataContext(DbContextOptions<DataContext> options)
-        : base(options)
-    {
-    }
-
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Patient> Patients { get; set; } = null!;
     public DbSet<HealthProfessional> HealthProfessionals { get; set; } = null!;
